@@ -6,6 +6,9 @@ node_modules/
 
 project-9fa85-firebase-adminsdk-fbsvc-*.json
 
+credentials.json
+google-services.json
+
 # Expo
 .expo/
 dist/

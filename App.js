@@ -20,8 +20,17 @@ const ROUTE_MAP = {
 };
 
 function resolveNotificationRoute(data) {
-  if (!data || typeof data.screen !== 'string') return null;
-  return ROUTE_MAP[data.screen] ?? null;
+  if (!data || typeof data.url !== 'string') return null;
+
+  // Map URL path to a screen key
+  const urlToScreen = {
+    '/live': 'live',
+    '/': 'home',
+    '/profile': 'profile',
+  };
+
+  const screen = urlToScreen[data.url];
+  return screen ? ROUTE_MAP[screen] : null;
 }
 
 async function registerForPushNotificationsAsync() {
@@ -57,29 +66,20 @@ export default function App() {
   };
 
   useEffect(() => {
-    console.log('[app] mounted');
+  console.log('[app] mounted');
 
-    registerForPushNotificationsAsync().then((token) => {
-      console.log('[app] push token:', token);
-      if (token) setExpoPushToken(token);
-    });
+  registerForPushNotificationsAsync().then((token) => {
+    console.log('[app] push token:', token);
+    if (token) setExpoPushToken(token);
+  });
 
-    Notifications.getLastNotificationResponseAsync().then((response) => {
-      console.log('[app] getLastNotificationResponseAsync:', response);
-      if (response) handleTap('cold-start', response);
-    });
+  Notifications.getLastNotificationResponseAsync().then((response) => {
+    console.log('[app] getLastNotificationResponseAsync:', response);
+    if (response) handleTap('cold-start', response);
+  });
 
-    const subscription = Notifications.addNotificationResponseReceivedListener(
-      (response) => handleTap('foreground/background', response)
-    );
-
-    return () => subscription.remove();
-  }, []);
-
-
-  useEffect(() => {
   const receivedSub = Notifications.addNotificationReceivedListener((notification) => {
-    console.log('[app] notification RECEIVED (not necessarily tapped):', notification.request.content.data);
+    console.log('[app] notification RECEIVED:', notification.request.content.data);
   });
 
   const responseSub = Notifications.addNotificationResponseReceivedListener((response) => {
