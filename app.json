@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "notif-crash-repro",
+    "slug": "notif-crash-repro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.example.notifcrashrepro",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-notifications",
+      "expo-status-bar"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cd87651e-9ed1-4400-93c3-76ff1b857aa4"
+      }
+    },
+    "owner": "basanta3"
+  }
+}
